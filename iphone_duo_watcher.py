@@ -38,18 +38,21 @@ from email.message import EmailMessage
 ENDPOINT = "https://www.apple.com/shop/fulfillment-messages"
 HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 "
-        "(KHTML, like Gecko) Version/17.0 Safari/605.1.15"
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
     ),
-    "Accept": "application/json",
+    "Accept": "*/*",
+    "Accept-Language": "en,es-US;q=0.9,es-419;q=0.8,es;q=0.7",
+    "Referer": "https://www.apple.com/shop/buy-iphone/iphone-duo",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
 }
 
 
 def fetch_stores(zip_code: str, parts: list[str]) -> list[dict]:
-    params = [("fae", "true"), ("little", "false"),
-              ("cppart", "UNLOCKED/US"), ("purchaseOption", "fullPrice"),
-              ("mts.0", "regular"), ("mts.1", "sticky"), ("fts", "true"),
-              ("pl", "true"), ("searchNearby", "true"), ("location", zip_code)]
+    params = [("fae", "true"), ("pl", "true"), ("mts.0", "regular"),
+              ("cppart", "UNLOCKED/US"), ("location", zip_code)]
     for i, p in enumerate(parts):
         params.append((f"parts.{i}", p))
     url = f"{ENDPOINT}?{urllib.parse.urlencode(params)}"
