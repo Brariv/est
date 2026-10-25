@@ -46,8 +46,10 @@ HEADERS = {
 
 
 def fetch_stores(zip_code: str, parts: list[str]) -> list[dict]:
-    params = [("pl", "true"), ("mts.0", "regular"), ("mts.1", "compact"),
-              ("searchNearby", "true"), ("location", zip_code)]
+    params = [("fae", "true"), ("little", "false"),
+              ("cppart", "UNLOCKED/US"), ("purchaseOption", "fullPrice"),
+              ("mts.0", "regular"), ("mts.1", "sticky"), ("fts", "true"),
+              ("pl", "true"), ("searchNearby", "true"), ("location", zip_code)]
     for i, p in enumerate(parts):
         params.append((f"parts.{i}", p))
     url = f"{ENDPOINT}?{urllib.parse.urlencode(params)}"
